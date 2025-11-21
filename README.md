@@ -79,12 +79,18 @@ Open your browser and navigate to `http://127.0.0.1:8000/` to view the applicati
 
 ## Deployment
 
-This project is configured for deployment on **Heroku**.
+This project is configured for deployment on **Render**.
 
-1.  Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli).
-2.  Login: `heroku login`
-3.  Create app: `heroku create`
-4.  Deploy: `git push heroku main`
+1.  Push your code to GitHub.
+2.  Create a new **Web Service** on Render.
+3.  Connect your GitHub repository.
+4.  Render will automatically detect the `render.yaml` file (Blueprint) or you can configure manually:
+    -   **Build Command**: `./build.sh`
+    -   **Start Command**: `gunicorn multimedia_website.wsgi:application`
+    -   **Environment Variables**:
+        -   `PYTHON_VERSION`: `3.10.12` (or your version)
+        -   `SECRET_KEY`: (Generate a strong key)
+        -   `DATABASE_URL`: (Internal connection string if using Render Postgres)
 
 ## Contributing
 
