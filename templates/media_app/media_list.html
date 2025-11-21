@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Upload Media</h2>
+<form method="post" enctype="multipart/form-data" class="upload-form">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="{{ form.name.id_for_label }}">Name</label>
+    {{ form.name }}
+  </div>
+  <div class="form-group">
+    <label for="{{ form.description.id_for_label }}">File Write-up</label>
+    {{ form.description }}
+  </div>
+  <div class="form-group file-input-group">
+    <label for="{{ form.file.id_for_label }}" class="file-label">
+      <i class="fas fa-cloud-upload-alt"></i> Choose File
+    </label>
+    {{ form.file }}
+    <span id="file-name">No file chosen</span>
+  </div>
+  <button type="submit" class="btn btn-primary">Upload Media</button>
+</form>
+
+<hr>
+
+<h2>Media List</h2>
+<div class="media-grid">
+  {% for item in media %}
+  <div class="media-item">
+    {% if item.media_type == 'image' %}
+    <a href="{{ item.file.url }}" target="_blank"><img src="{{ item.file.url }}" alt="{{ item.name }}"></a>
+    {% elif item.media_type == 'video' %}
+    <video controls>
+      <source src="{{ item.file.url }}">
+      Your browser does not support the video tag.
+    </video>
+    {% endif %}
+    <div class="media-info">
+      <div>
+        <a href="{{ item.file.url }}" target="_blank" class="media-name">{{ item.name }}</a>
+        {% if item.description %}
+        <p class="media-description">{{ item.description }}</p>
+        {% endif %}
+      </div>
+      <div class="media-actions-menu">
+        <button class="menu-btn"><i class="fas fa-ellipsis-v"></i></button>
+        <div class="menu-dropdown">
+          <a href="{% url 'edit_media' item.id %}" class="btn btn-edit">Edit</a>
+          <a href="{% url 'delete_media' item.id %}" class="btn btn-delete">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

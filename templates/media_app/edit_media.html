@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Edit Media</h2>
+<form method="post" enctype="multipart/form-data" class="upload-form">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="{{ form.name.id_for_label }}">Name</label>
+        {{ form.name }}
+    </div>
+    <div class="form-group">
+        <label for="{{ form.description.id_for_label }}">File Write-up</label>
+        {{ form.description }}
+    </div>
+    <div class="form-group">
+        <label>Current File</label>
+        <p>{{ media.file.name }}</p>
+        <label for="{{ form.file.id_for_label }}">Change File (optional)</label>
+        <div class="file-input-group">
+            <label for="{{ form.file.id_for_label }}" class="file-label">
+                <i class="fas fa-cloud-upload-alt"></i> Choose New File
+            </label>
+            {{ form.file }}
+            <span id="file-name">No file chosen</span>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a href="{% url 'media_list' %}" class="btn" style="background-color: #95a5a6;">Cancel</a>
+</form>
+{% endblock %}
